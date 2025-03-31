@@ -1,2 +1,7 @@
 # dependencies
 /frontend/node_modules
+
+# backend
+backend/data_generator/migrations
+backend/data_generator/__pycache__
+backend/backend/__pycache__
