@@ -2,13 +2,7 @@ import React, { useState, useCallback } from "react";
 import style from "./Home.module.sass";
 import Rows from "views/Rows/Rows";
 
-type Item = {
-  id: number;
-  name: string;
-  type: string;
-};
-
-const initialArray: Item[] = [
+const initialArray = [
   { id: 0, name: "test0", type: "test0-type" },
   { id: 1, name: "test1", type: "test1-type" },
   { id: 2, name: "test2", type: "test2-type" },
@@ -17,7 +11,7 @@ const initialArray: Item[] = [
 ];
 
 function Home() {
-  const [array, setArray] = useState<Item[]>(initialArray);
+  const [array, setArray] = useState<any[]>(initialArray);
 
   const updateItem = useCallback((id: number, newName: string) => {
     setArray((prevArray) =>
@@ -31,7 +25,7 @@ function Home() {
 
   return (
     <div className={style.container}>
-      <Rows array={array} onUpdate={updateItem} />
+      <Rows array={array} setArray={setArray} onUpdate={updateItem} />
     </div>
   );
 }
