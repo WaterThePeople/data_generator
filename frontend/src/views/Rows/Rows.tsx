@@ -14,10 +14,14 @@ function Rows({
   array,
   setArray,
   onUpdate,
+  removeRow,
+  types,
 }: {
   array: any[];
   setArray: React.Dispatch<React.SetStateAction<any[]>>;
-  onUpdate: (id: number, newName: string) => void;
+  onUpdate: (id: number, newName: string, type: string) => void;
+  removeRow: (id: number) => void;
+  types: any[];
 }) {
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
@@ -48,6 +52,8 @@ function Rows({
                 item={item}
                 onUpdate={onUpdate}
                 index={index}
+                removeRow={removeRow}
+                types={types}
               />
             ))}
           </div>
@@ -61,10 +67,14 @@ function SortableRow({
   item,
   onUpdate,
   index,
+  removeRow,
+  types,
 }: {
   item: any;
-  onUpdate: (id: number, newName: string) => void;
+  onUpdate: (id: number, newName: string, type: string) => void;
   index: number;
+  removeRow: (id: number) => void;
+  types: any[];
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: item.id });
@@ -72,19 +82,24 @@ function SortableRow({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    cursor: "grab",
   };
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-      className={styles.list_item}
-    >
-      <div className={styles.square}>{index}</div>
-      <Row item={item} onUpdate={onUpdate} />
+    <div ref={setNodeRef} style={style} className={styles.list_item}>
+      <div
+        className={styles.square}
+        {...attributes}
+        {...listeners}
+        style={{ cursor: "grab" }}
+      >
+        {index}
+      </div>
+      <Row
+        item={item}
+        onUpdate={onUpdate}
+        removeRow={removeRow}
+        types={types}
+      />
     </div>
   );
 }

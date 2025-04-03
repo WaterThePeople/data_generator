@@ -1,0 +1,28 @@
+@import 'styles'
+
+.modal
+    width: 100vw
+    height: 100vh
+    position: fixed
+    top: 0
+    left: 0
+    background: rgba(0, 0, 0, 0.5)
+    z-index: 10
+
+.container
+    height: calc(100% - $value-6*2)
+    width: calc(100% - $value-6*2)
+    @include element-flex(column, center, center)
+    margin: $value-6
+
+.content
+    @include element-flex(column)
+    border-radius: $value-3
+    position: relative
+    overflow-y: auto
+    overflow-x: hidden
+
+.close_button
+    position: absolute
+    top: $value-3
+    right: $value-3

@@ -2,12 +2,35 @@
 
 .container
     width: 80%
-    @include element-flex(column)
+    @include element-flex(column, flex-start, flex-start)
     margin-top: $value-16
     margin-bottom: $value-16
-    gap: $value-32
+    gap: $value-8
     box-sizing: border-box
     padding: $value-8
     color: $w
     background: $b1
     border-radius: $value-3
+
+.separator
+    width: 100%
+    height: 2px
+    background: $b5
+
+.rows_amount
+    width: 100%
+    @include element-flex(row,flex-start,center)
+    gap: $value-2
+
+.title
+    +label-28
+    color: $bw
+    height: 40px
+
+.generate_data_button
+    background: $green3
+    border-radius: $value-1
+    border: none
+    &:hover
+        background: $green4
+        border: none

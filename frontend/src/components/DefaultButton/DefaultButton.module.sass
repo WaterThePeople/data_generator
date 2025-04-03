@@ -1,0 +1,20 @@
+@import 'styles'
+
+.container
+    @include element-flex(row, center, center)
+    border: 2px solid $b9
+    padding: $value-2 $value-4
+    border-radius: $value-3
+    background: $b1
+    &:hover
+        cursor: pointer
+        background: $b2
+        border-color: $bw
+        .text
+            color: $w
+
+.text
+    color: $bw
+    +label-20
+    +m
+        +label-16

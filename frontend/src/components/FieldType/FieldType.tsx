@@ -1,30 +1,11 @@
 import React from "react";
 import style from "./FieldType.module.sass";
 
-function FieldType({
-  value,
-  setValue,
-  maxLength = 250,
-  readOnly = false,
-  disabled = false,
-}: {
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
-  maxLength?: number;
-  readOnly?: boolean;
-  disabled?: boolean;
-}) {
+function FieldType({ value, onClick }: { value: string; onClick: Function }) {
   return (
-    <div className={style.container}>
-      <input
-        className={style.input}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        maxLength={maxLength}
-        readOnly={readOnly}
-        disabled={disabled}
-      />
-    </div>
+    <button className={style.container} onClick={() => onClick()}>
+      <div className={style.text}>{value}</div>
+    </button>
   );
 }
 
