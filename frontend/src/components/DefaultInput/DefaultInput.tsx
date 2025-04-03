@@ -1,5 +1,6 @@
 import React from "react";
 import style from "./DefaultInput.module.sass";
+import cn from "classnames";
 
 function DefaultInput({
   value,
@@ -27,7 +28,7 @@ function DefaultInput({
   };
 
   return (
-    <div className={style.container}>
+    <div className={cn(style.container, isNumeric && style.is_numeric)}>
       <input
         className={style.input}
         value={value}
