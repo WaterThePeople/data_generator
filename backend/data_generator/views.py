@@ -18,7 +18,7 @@ def viewDataSet(request):
 
     response = []
 
-    for i in range(request.data["amount"]):  # generete specimens as many as "amount" says
+    for i in range(request.data["amount"]):  # generate as many specimens as "amount" dictates
         new_specimen = {}
         for type in request.data["types"]:
             new_specimen[type["name"]] = generate_value(type["type"])
@@ -27,7 +27,10 @@ def viewDataSet(request):
 
 
 def generate_value(type):
+    # generate a human if we need one
+
     match type:
+        # extract data from the human and use it to fill the appropriate fields
         case "name":
             return "Maciek"
         case "surname":
