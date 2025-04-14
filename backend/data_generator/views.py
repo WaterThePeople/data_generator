@@ -10,8 +10,8 @@ import random
 
 @api_view(['GET'])
 def viewDefinedFieldTypes(request):
-    avilable_types=["name", "surname", "pesel_number", "city"]
-    return Response({"avilable_types": avilable_types}, status=200)
+    available_types=["name", "surname", "pesel_number", "city"]
+    return Response({"available_types": available_types}, status=200)
 
 
 @api_view(['POST'])
@@ -19,11 +19,11 @@ def viewDataSet(request):
 
     response = []
 
-    for i in range(request.data["amount"]):  # generate as many specimens as "amount" dictates
+    for i in range(request.data["amount"]):  # generate as many specimen as "amount" dictates
         row = {}
         human = Person()
-        for type in request.data["types"]:
-            row[type["name"]] = extract_value(type["type"], human)
+        for data_type in request.data["types"]:
+            row[data_type["name"]] = extract_value(data_type["type"], human)
         response.append(row)
     return Response(response,status=200)
 
