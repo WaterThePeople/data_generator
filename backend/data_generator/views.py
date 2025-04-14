@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from person import Person
 
 import random 
 # Create your views here.
@@ -19,24 +20,24 @@ def viewDataSet(request):
     response = []
 
     for i in range(request.data["amount"]):  # generate as many specimens as "amount" dictates
-        new_specimen = {}
+        row = {}
+        human = Person()
         for type in request.data["types"]:
-            new_specimen[type["name"]] = generate_value(type["type"])
-        response.append(new_specimen)
+            row[type["name"]] = extract_value(type["type"], human)
+        response.append(row)
     return Response(response,status=200)
 
 
-def generate_value(type):
-    # generate a human if we need one
+def extract_value(data_type, human):
 
-    match type:
+    match data_type:
         # extract data from the human and use it to fill the appropriate fields
         case "name":
-            return "Maciek"
+            return human.name
         case "surname":
-            return "Jakiś"
+            return human.surname
         case "pesel_number":
-            return random.randint(10000000000, 99999999999)
+            return human.PESEL
         case "city":
             return "Wrocław"
         case _:
