@@ -2,20 +2,20 @@ from django.shortcuts import render
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from person import Person
+from data_generator.person import Person
 
 import random 
 # Create your views here.
 
 
 @api_view(['GET'])
-def viewDefinedFieldTypes(request):
+def view_defined_field_types(request):
     available_types=["name", "surname", "pesel_number", "city"]
     return Response({"available_types": available_types}, status=200)
 
 
 @api_view(['POST'])
-def viewDataSet(request):
+def view_data_set(request):
 
     response = []
 
@@ -28,7 +28,14 @@ def viewDataSet(request):
     return Response(response,status=200)
 
 
-def extract_value(data_type, human):
+def extract_value(data_type, human=None, place=None):
+    """
+    extract_value extracts the value from given objects as requested by the data_type
+    :param data_type: type of data to extract from provided objects
+    :param human: object representing a human
+    :param place: object representing a place (an address)
+    :return: extracted value in string form
+    """
 
     match data_type:
         # extract data from the human and use it to fill the appropriate fields
