@@ -40,9 +40,9 @@ def extract_value(data_type, human=None, place=None):
     match data_type:
         # extract data from the human and use it to fill the appropriate fields
         case "name":
-            return human.name
+            return human.get_name()
         case "surname":
-            return human.surname
+            return human.get_surname()
         case "pesel_number":
             return human.PESEL
         case "birth_date":

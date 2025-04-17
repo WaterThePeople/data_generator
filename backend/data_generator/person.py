@@ -16,19 +16,55 @@ class Person:
         # generate data
         if bool(random.getrandbits(1)):
             self.gender = "male"
-            self.name = self.NAME_GENERATOR_MALE.generate_value()
-            self.surname = self.SURNAME_GENERATOR_MALE.generate_value()
         else:
             self.gender = "female"
-            self.name = self.NAME_GENERATOR_FEMALE.generate_value()
-            self.surname = self.SURNAME_GENERATOR_FEMALE.generate_value()
+        self.names = []
+        self.surnames = []
         self.birth_date = Person.generate_random_birthdate()
-        # TODO: PESEL generation
         self.PESEL = Person.generate_pesel_number(self.birth_date, self.gender)
+
+    def get_name(self,retries=15):
+        """
+        get_name: Generates a new name and adds it to the list of names.
+        If the name already exists and the list has fewer than 4 names, it tries again.
+        If there are already 4 or more names, it accepts duplicates.
+        If there are more than 15 attempts to gegenerate it stops to prevent infinite loops
+        :return: A new name as a string.
+        """
+        if self.gender == "male":
+            name = self.NAME_GENERATOR_MALE.generate_value()
+        else:
+            name = self.NAME_GENERATOR_FEMALE.generate_value()
+        if name in self.names and len(self.names) < 4:
+            if retries > 0:
+                return self.get_name(retries=retries-1)
+        self.names.append(name)
+        return name
+
+    def get_surname(self,retries=15):
+        """
+        get_surname: Generates a new surname and adds it to the list of surnames.
+        If the surname already exists and the list has fewer than 4 names, it tries again.
+        If there are already 4 or more surnames, it accepts duplicates.
+        If there are more than 15 attempts to gegenerate it stops to prevent infinite loops
+        :return: A new surname as a string.
+        """
+        if self.gender == "male":
+            surname = self.SURNAME_GENERATOR_MALE.generate_value()
+        else:
+            surname = self.SURNAME_GENERATOR_FEMALE.generate_value()
+        if surname in self.surnames and len(self.surnames) < 4:
+            if retries > 0:
+                return self.get_surname(retries=retries-1)
+        self.surnames.append(surname)
+        return surname
 
     @staticmethod
     def generate_random_birthdate():
-        """todo: documentation"""
+        """
+        generate_random_birthdate: generates a correct and random date of birth based on gaussian curve
+        :return: date in datetime date format
+        """
         age_average = 41.9
         age_std_deviation = 18.0
 
@@ -67,6 +103,12 @@ class Person:
 
     @staticmethod
     def generate_pesel_number(date_for_pesel, gender):
+        """
+        generate_pesel_number: generates a correct pesel number based on given date and gender
+        :param date_for_pesel: date for PESEL generation in datetime date format
+        :param gender: gender for PESEL generation as string "male" or "female"
+        :return: PESEL number as string with 11 letters
+        """
         pesel_number = ""
         # extract number 00-99 from year
         pesel_number=str(date_for_pesel.year)[2:]
@@ -100,4 +142,5 @@ class Person:
         else:
             numbers = [0,2,4,6,8]
         pesel_number += str(random.choice(numbers))
+
         return pesel_number

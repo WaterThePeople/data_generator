@@ -5,7 +5,7 @@ class Generator:
     def __init__(self, input_file):
         # parse data and fill the internal data store
         print(f"Reading {input_file}...")
-        self.values = ["value1", "value2"]
+        self.values = ["value1", "value2", "value3", "value4"]
         self.iterator = 0
         print(f"Dataset {input_file} initialized!")
 
