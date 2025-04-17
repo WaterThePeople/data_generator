@@ -10,7 +10,7 @@ import random
 
 @api_view(['GET'])
 def view_defined_field_types(request):
-    available_types=["name", "surname", "pesel_number", "city"]
+    available_types=["name", "surname", "pesel_number", "gender", "birth_date", "city"]
     return Response({"available_types": available_types}, status=200)
 
 
@@ -45,6 +45,10 @@ def extract_value(data_type, human=None, place=None):
             return human.surname
         case "pesel_number":
             return human.PESEL
+        case "birth_date":
+            return human.birth_date
+        case "gender":
+            return human.gender
         case "city":
             return "Wrocław"
         case _:
