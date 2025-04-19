@@ -32,9 +32,9 @@ class Person:
         :return: A new name as a string.
         """
         if self.gender == "male":
-            name = self.NAME_GENERATOR_MALE.generate_value("name")
+            name = self.NAME_GENERATOR_MALE.generate_value("name", "count")
         else:
-            name = self.NAME_GENERATOR_FEMALE.generate_value("name")
+            name = self.NAME_GENERATOR_FEMALE.generate_value("name", "count")
         if name in self.names and len(self.names) < 4:
             if retries > 0:
                 return self.get_name(retries=retries-1)
@@ -50,9 +50,9 @@ class Person:
         :return: A new surname as a string.
         """
         if self.gender == "male":
-            surname = self.SURNAME_GENERATOR_MALE.generate_value("surname")
+            surname = self.SURNAME_GENERATOR_MALE.generate_value("surname", "count")
         else:
-            surname = self.SURNAME_GENERATOR_FEMALE.generate_value("surname")
+            surname = self.SURNAME_GENERATOR_FEMALE.generate_value("surname", "count")
         if surname in self.surnames and len(self.surnames) < 4:
             if retries > 0:
                 return self.get_surname(retries=retries-1)
