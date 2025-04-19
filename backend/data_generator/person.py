@@ -26,8 +26,8 @@ class Person:
     def get_name(self,retries=15):
         """
         get_name: Generates a new name and adds it to the list of names.
-        If the name already exists and the list has fewer than 4 names, it tries again.
-        If there are already 4 or more names, it accepts duplicates.
+        If the name already exists and the list has fewer than 10 names, it tries again.
+        If there are already 10 or more names, it accepts duplicates.
         If there are more than 15 attempts to gegenerate it stops to prevent infinite loops
         :return: A new name as a string.
         """
@@ -35,7 +35,7 @@ class Person:
             name = self.NAME_GENERATOR_MALE.generate_value("name", "count")
         else:
             name = self.NAME_GENERATOR_FEMALE.generate_value("name", "count")
-        if name in self.names and len(self.names) < 4:
+        if name in self.names and len(self.names) < 10:
             if retries > 0:
                 return self.get_name(retries=retries-1)
         self.names.append(name)
@@ -44,8 +44,8 @@ class Person:
     def get_surname(self,retries=15):
         """
         get_surname: Generates a new surname and adds it to the list of surnames.
-        If the surname already exists and the list has fewer than 4 names, it tries again.
-        If there are already 4 or more surnames, it accepts duplicates.
+        If the surname already exists and the list has fewer than 10 names, it tries again.
+        If there are already 10 or more surnames, it accepts duplicates.
         If there are more than 15 attempts to gegenerate it stops to prevent infinite loops
         :return: A new surname as a string.
         """
@@ -53,7 +53,7 @@ class Person:
             surname = self.SURNAME_GENERATOR_MALE.generate_value("surname", "count")
         else:
             surname = self.SURNAME_GENERATOR_FEMALE.generate_value("surname", "count")
-        if surname in self.surnames and len(self.surnames) < 4:
+        if surname in self.surnames and len(self.surnames) < 10:
             if retries > 0:
                 return self.get_surname(retries=retries-1)
         self.surnames.append(surname)

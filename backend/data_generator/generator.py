@@ -12,7 +12,7 @@ class Generator:
         """
         # parse data and fill the internal data store
         print(f"Reading {input_file}...")
-        with open(input_file, mode='r') as file:
+        with open(input_file, mode='r', encoding='utf-8') as file:
             csv_file=csv.DictReader(file)
             self.values=list(csv_file)
         print(f"Dataset {input_file} initialized!")
