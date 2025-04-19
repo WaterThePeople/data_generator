@@ -92,7 +92,8 @@ class Person:
         else:
             birth_day = random.randint(1, 30)
 
-        birth_day = random.randint(1, 28)  # good enough
+        # birth_day = random.randint(1, 28)  # good enough
+        # seems to be a mistake, commented out for now
 
         try:
             birth_date = datetime(birth_year, birth_month, birth_day).date()

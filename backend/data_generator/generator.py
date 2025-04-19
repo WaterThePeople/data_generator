@@ -17,14 +17,14 @@ class Generator:
             self.values=list(csv_file)
         print(f"Dataset {input_file} initialized!")
 
-    def generate_value(self, field_name, count_field):
+    def generate_value(self, field_name, count_field="none"):
         """
         Method used to extract a random value from the loaded dataset.
         @param field_name: name of the field to extract the value from
         @param count_field: name of the field used to determine the probability of extraction (only supported by some datasets)
         """
         data_ptr = 0
-        if count_field is None:
+        if count_field == "none":
             data_ptr = random.randint(0, len(self.values) - 1)
         else:
             # a simple algorithm of weighted roulette
