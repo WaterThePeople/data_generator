@@ -8,9 +8,10 @@ import random
 # Create your views here.
 
 
+
 @api_view(['GET'])
 def view_defined_field_types(request):
-    available_types=["name", "surname", "pesel_number", "gender", "birth_date", "city"]
+    available_types=["id", "name", "surname", "pesel_number", "gender", "birth_date", "locality", "municipality", "county", "voivodeship"]
     return Response({"available_types": available_types}, status=200)
 
 
@@ -23,22 +24,24 @@ def view_data_set(request):
         row = {}
         human = Person()
         for data_type in request.data["types"]:
-            row[data_type["name"]] = extract_value(data_type["type"], human)
+            row[data_type["name"]] = extract_value(data_type["type"], human, i)
         response.append(row)
     return Response(response,status=200)
 
 
-def extract_value(data_type, human=None, place=None):
+def extract_value(data_type, human=None, id=0):
     """
     extract_value extracts the value from given objects as requested by the data_type
     :param data_type: type of data to extract from provided objects
     :param human: object representing a human
-    :param place: object representing a place (an address)
+    :param id: incrementing id for humans in set
     :return: extracted value in string form
     """
 
     match data_type:
         # extract data from the human and use it to fill the appropriate fields
+        case "id":
+            return id
         case "name":
             return human.get_name()
         case "surname":
@@ -49,8 +52,14 @@ def extract_value(data_type, human=None, place=None):
             return human.birth_date
         case "gender":
             return human.gender
-        case "city":
-            return "Wrocław"
+        case "locality":
+            return human.place["locality"]
+        case "municipality":
+            return human.place["municipality"]
+        case "county":
+            return human.place["county"]
+        case "voivodeship":
+            return human.place["voivodeship"]
         case _:
             return None
 

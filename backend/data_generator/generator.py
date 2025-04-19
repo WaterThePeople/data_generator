@@ -20,7 +20,7 @@ class Generator:
     def generate_value(self, field_name, count_field="none"):
         """
         Method used to extract a random value from the loaded dataset.
-        @param field_name: name of the field to extract the value from
+        @param field_name: name of the field to extract the value from. It can be a list and in that case function returns a dictionary.
         @param count_field: name of the field used to determine the probability of extraction (only supported by some datasets)
         """
         data_ptr = 0
@@ -39,4 +39,12 @@ class Generator:
                     data_ptr += 1
                 else:
                     break
-        return self.values[data_ptr][field_name]
+        if isinstance(field_name, list):
+            response = {}
+            value = self.values[data_ptr]
+            for name in field_name:
+                if name in self.values[data_ptr]:
+                    response[name]=self.values[data_ptr][name]
+            return response
+        else:
+            return self.values[data_ptr][field_name]

@@ -10,6 +10,7 @@ class Person:
     NAME_GENERATOR_FEMALE = Generator("data_generator/data/names_female.csv")
     SURNAME_GENERATOR_MALE = Generator("data_generator/data/surnames_male.csv")
     SURNAME_GENERATOR_FEMALE = Generator("data_generator/data/surnames_female.csv")
+    PLACE_GENERATOR = Generator("data_generator/data/places.csv")
     print("Person data initialized!")
 
     def __init__(self):
@@ -22,6 +23,8 @@ class Person:
         self.surnames = []
         self.birth_date = Person.generate_random_birthdate()
         self.PESEL = Person.generate_pesel_number(self.birth_date, self.gender)
+
+        self.place = self.PLACE_GENERATOR.generate_value(["locality", "municipality", "county", "voivodeship"])
 
     def get_name(self,retries=15):
         """
