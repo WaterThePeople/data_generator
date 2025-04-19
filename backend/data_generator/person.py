@@ -6,10 +6,10 @@ import random
 class Person:
     # these should be initialized only once in the program lifetime
     print("Initializing Person data sets...")
-    NAME_GENERATOR_MALE = Generator("names_male.csv")
-    NAME_GENERATOR_FEMALE = Generator("names_female.csv")
-    SURNAME_GENERATOR_MALE = Generator("surnames_male.csv")
-    SURNAME_GENERATOR_FEMALE = Generator("surnames_female.csv")
+    NAME_GENERATOR_MALE = Generator("data_generator/data/names_male.csv")
+    NAME_GENERATOR_FEMALE = Generator("data_generator/data/names_female.csv")
+    SURNAME_GENERATOR_MALE = Generator("data_generator/data/surnames_male.csv")
+    SURNAME_GENERATOR_FEMALE = Generator("data_generator/data/surnames_female.csv")
     print("Person data initialized!")
 
     def __init__(self):
@@ -32,9 +32,9 @@ class Person:
         :return: A new name as a string.
         """
         if self.gender == "male":
-            name = self.NAME_GENERATOR_MALE.generate_value()
+            name = self.NAME_GENERATOR_MALE.generate_value("name")
         else:
-            name = self.NAME_GENERATOR_FEMALE.generate_value()
+            name = self.NAME_GENERATOR_FEMALE.generate_value("name")
         if name in self.names and len(self.names) < 4:
             if retries > 0:
                 return self.get_name(retries=retries-1)
@@ -50,9 +50,9 @@ class Person:
         :return: A new surname as a string.
         """
         if self.gender == "male":
-            surname = self.SURNAME_GENERATOR_MALE.generate_value()
+            surname = self.SURNAME_GENERATOR_MALE.generate_value("surname")
         else:
-            surname = self.SURNAME_GENERATOR_FEMALE.generate_value()
+            surname = self.SURNAME_GENERATOR_FEMALE.generate_value("surname")
         if surname in self.surnames and len(self.surnames) < 4:
             if retries > 0:
                 return self.get_surname(retries=retries-1)
