@@ -3,15 +3,14 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from data_generator.person import Person
+from data_generator.text_generator import TextGenerator
 
-import random 
-# Create your views here.
-
-
+# text generator initialisation
+txt_gen_pt = TextGenerator("data_generator/data/pantadeusz.txt")
 
 @api_view(['GET'])
 def view_defined_field_types(request):
-    available_types=["id", "name", "surname", "pesel_number", "gender", "birth_date", "locality", "municipality", "county", "voivodeship"]
+    available_types=["id", "name", "surname", "pesel_number", "gender", "birth_date", "locality", "municipality", "county", "voivodeship", "paragraph"]
     return Response({"available_types": available_types}, status=200)
 
 
@@ -60,6 +59,8 @@ def extract_value(data_type, human=None, id=0):
             return human.place["county"]
         case "voivodeship":
             return human.place["voivodeship"]
+        case "paragraph":
+            return txt_gen_pt.get_random_paragraph()
         case _:
             return None
 

@@ -17,6 +17,7 @@ class Generator:
             self.values=list(csv_file)
         print(f"Dataset {input_file} initialized!")
 
+
     def generate_value(self, field_name, count_field="none"):
         """
         Method used to extract a random value from the loaded dataset.
