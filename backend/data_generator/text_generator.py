@@ -6,9 +6,9 @@ class TextGenerator:
     def __init__(self, input_file):
         # parse data and fill the internal data store
         print(f"Reading {input_file}...")
-        with open(input_file, mode='r') as file:
+        with open(input_file, mode='r', encoding='utf-8') as file:
             self.content = file.read().split('\n\n') # read and split the result into a list of paragraphs
         print(f"Text {input_file} initialized!")
 
     def get_random_paragraph(self):
-        return random.choice(self.content).strip('\n ')
+        return random.choice(self.content).replace('\n',' ').strip()
