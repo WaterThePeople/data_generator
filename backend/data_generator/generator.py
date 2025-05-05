@@ -40,6 +40,7 @@ class Generator:
                     data_ptr += 1
                 else:
                     break
+        # check is it a list or not. If it is a list, return a dictionary (for place generation). If not, return a string value (for name and surname generation).
         if isinstance(field_name, list):
             response = {}
             value = self.values[data_ptr]

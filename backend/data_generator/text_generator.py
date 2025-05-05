@@ -11,4 +11,11 @@ class TextGenerator:
         print(f"Text {input_file} initialized!")
 
     def get_random_paragraph(self):
-        return random.choice(self.content).replace('\n',' ').strip()
+        """
+        get_random_paragraph: Get a random parapgraph from a list of paragraphs existing in that class.
+        :return: A long string without newline characters.
+        """
+        if not self.content:
+            return None
+        else:
+            return random.choice(self.content).replace('\n',' ').strip()
