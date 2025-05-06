@@ -1,30 +1,47 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import style from "./Home.module.sass";
 import Rows from "views/Rows/Rows";
 import DefaultButton from "components/DefaultButton/DefaultButton";
 import DefaultInput from "components/DefaultInput/DefaultInput";
+import LoadingSpinner from "components/LoadingSpinner/LoadingSpinner";
 
-const types = ["integer", "text", "date", "time", "month", "weekday"];
+import axios from "axios";
+import { serverPath } from "BackendServerPath";
+
+const initialTypes = ["id", "name", "surname"];
 
 const initialArray = [
-  { id: 0, name: "ID", type: "integer" },
-  { id: 1, name: "Name", type: "text" },
-  { id: 2, name: "Surname", type: "text" },
-  { id: 3, name: "Date", type: "date" },
-  { id: 4, name: "Time", type: "time" },
-  { id: 5, name: "Month", type: "month" },
-  { id: 6, name: "Weekday", type: "weekday" },
+  { id: 0, name: "ID", type: initialTypes[0] },
+  { id: 1, name: "Name", type: initialTypes[1] },
+  { id: 2, name: "Surname", type: initialTypes[2] },
 ];
 
 function Home() {
   const [array, setArray] = useState<any[]>(initialArray);
-  const [amount, setAmount] = useState<string | number>(100);
+  const [types, setTypes] = useState<any[]>(initialTypes);
+  const [amount, setAmount] = useState<number>(5);
+  const [loading, setLoading] = useState(false);
+
+  const getTypes = async () => {
+    axios
+      .get(`${serverPath}api/types/`, {})
+      .then((response) => {
+        setTypes(response?.data?.available_types || [initialTypes]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getTypes();
+  }, []);
 
   const updateItem = useCallback(
-    (id: number, newName: string, type: string) => {
+    (id: number, newName: string, newType: string) => {
       setArray((prevArray) =>
         prevArray.map((item) =>
-          item.id === id ? { ...item, name: newName } : item
+          item.id === id ? { ...item, name: newName, type: newType } : item
         )
       );
     },
@@ -43,6 +60,45 @@ function Home() {
     setArray((prev) => prev.filter((item) => item.id !== id));
   };
 
+  const modifyArray = (array: any) => {
+    const temp: any[] = [];
+    array?.map((item: any) =>
+      temp.push({
+        name: item?.name ? item?.name : "empty",
+        type: item?.type ? item?.type : "none",
+      })
+    );
+
+    return { amount: amount, types: temp };
+  };
+
+  const generateData = async () => {
+    setLoading(true);
+    const payload = modifyArray(array);
+    axios
+      .post(`${serverPath}api/data/`, payload)
+      .then((response) => {
+        const data = response?.data;
+        const jsonString = JSON.stringify(data, null, 2);
+        const blob = new Blob([jsonString], { type: "application/json" });
+
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "data.json";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <div className={style.container}>
       <Rows
@@ -56,14 +112,22 @@ function Home() {
       <div className={style.separator} />
       <div className={style.rows_amount}>
         <div className={style.title}>#Rows:</div>
-        <DefaultInput value={amount} setValue={setAmount} isNumeric />
+        <DefaultInput
+          value={amount}
+          setValue={(val) => setAmount(Number(val))}
+          isNumeric
+        />
       </div>
       <div className={style.separator} />
-      <DefaultButton
-        onClick={() => console.log()}
-        text="GENERATE DATA"
-        classname={style.generate_data_button}
-      />
+      {!loading ? (
+        <DefaultButton
+          onClick={() => generateData()}
+          text="GENERATE DATA"
+          classname={style.generate_data_button}
+        />
+      ) : (
+        <LoadingSpinner />
+      )}
     </div>
   );
 }
