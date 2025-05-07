@@ -85,7 +85,7 @@ class Person:
         birth_month = random.randint(1, 12)
 
         # leap-year validation
-        if birth_month in {1,3,5,7,8,10,11}:
+        if birth_month in {1,3,5,7,8,10,12}:
             birth_day = random.randint(1, 31)
         elif birth_month == 2:
             if isleap(birth_year):
@@ -94,9 +94,6 @@ class Person:
                 birth_day = random.randint(1, 28)
         else:
             birth_day = random.randint(1, 30)
-
-        # birth_day = random.randint(1, 28)  # good enough
-        # seems to be a mistake, commented out for now
 
         try:
             birth_date = datetime(birth_year, birth_month, birth_day).date()
