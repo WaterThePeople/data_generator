@@ -11,9 +11,9 @@ txt_gen_pt = TextGenerator("data_generator/data/pantadeusz.txt")
 @api_view(['GET'])
 def view_defined_field_types(request):
     """
-    view_defined_field_types: Generate http respone for given http request. Response contains all avilable data types for data generation.
+    view_defined_field_types: Generate http response for given http request. Response contains all available data types for data generation.
     :param request: Not necessary in this version.
-    :return: Http response with all avilable data types in response body. In response body it is a dictionary with list.
+    :return: Http response with all available data types in response body. In response body it is a dictionary with list.
     """
     available_types=["id", "name", "surname", "pesel_number", "gender", "birth_date", "locality", "municipality", "county", "voivodeship", "paragraph"]
     return Response({"available_types": available_types}, status=200)
@@ -23,8 +23,8 @@ def view_defined_field_types(request):
 def view_data_set(request):
     """
     view_data_set: Generate http response for given http request. Response contains data set depends on values in given request's body.
-    :param request: Contains in its body how many specimens should be be generated and which types of data returned specimens should contain. Request body is specified in API.
-    :return: Http response with a list of specimens with choosen data types in response body. In response body it is a list of dictionaries.
+    :param request: Contains in its body how many specimens should be generated and which types of data returned specimens should contain. Request body is specified in API.
+    :return: Http response with a list of specimens with chosen data types in response body. In response body it is a list of dictionaries.
     """
     response = []
 

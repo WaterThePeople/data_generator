@@ -6,10 +6,10 @@ import random
 class Person:
     # these should be initialized only once in the program lifetime
     print("Initializing Person data sets...")
-    NAME_GENERATOR_MALE = Generator("data_generator/data/names_male.csv")
-    NAME_GENERATOR_FEMALE = Generator("data_generator/data/names_female.csv")
-    SURNAME_GENERATOR_MALE = Generator("data_generator/data/surnames_male.csv")
-    SURNAME_GENERATOR_FEMALE = Generator("data_generator/data/surnames_female.csv")
+    NAME_GENERATOR_MALE = Generator("data_generator/data/names_male.csv", "count")
+    NAME_GENERATOR_FEMALE = Generator("data_generator/data/names_female.csv", "count")
+    SURNAME_GENERATOR_MALE = Generator("data_generator/data/surnames_male.csv", "count")
+    SURNAME_GENERATOR_FEMALE = Generator("data_generator/data/surnames_female.csv", "count")
     PLACE_GENERATOR = Generator("data_generator/data/places.csv")
     print("Person data initialized!")
 
@@ -31,13 +31,13 @@ class Person:
         get_name: Generates a new name and adds it to the list of names.
         If the name already exists and the list has fewer than 10 names, it tries again.
         If there are already 10 or more names, it accepts duplicates.
-        If there are more than 15 attempts to gegenerate it stops to prevent infinite loops
+        If there are more than 15 attempts to generate it stops to prevent infinite loops
         :return: A new name as a string.
         """
         if self.gender == "male":
-            name = self.NAME_GENERATOR_MALE.generate_value("name", "count")
+            name = self.NAME_GENERATOR_MALE.generate_value("name")
         else:
-            name = self.NAME_GENERATOR_FEMALE.generate_value("name", "count")
+            name = self.NAME_GENERATOR_FEMALE.generate_value("name")
         if name in self.names and len(self.names) < 10:
             if retries > 0:
                 return self.get_name(retries=retries-1)
@@ -49,13 +49,13 @@ class Person:
         get_surname: Generates a new surname and adds it to the list of surnames.
         If the surname already exists and the list has fewer than 10 names, it tries again.
         If there are already 10 or more surnames, it accepts duplicates.
-        If there are more than 15 attempts to gegenerate it stops to prevent infinite loops
+        If there are more than 15 attempts to generate it stops to prevent infinite loops
         :return: A new surname as a string.
         """
         if self.gender == "male":
-            surname = self.SURNAME_GENERATOR_MALE.generate_value("surname", "count")
+            surname = self.SURNAME_GENERATOR_MALE.generate_value("surname")
         else:
-            surname = self.SURNAME_GENERATOR_FEMALE.generate_value("surname", "count")
+            surname = self.SURNAME_GENERATOR_FEMALE.generate_value("surname")
         if surname in self.surnames and len(self.surnames) < 10:
             if retries > 0:
                 return self.get_surname(retries=retries-1)
