@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from data_generator.person import Person
 from data_generator.text_generator import TextGenerator
+import random
 
 # text generator initialisation
 txt_gen_pt = TextGenerator("data_generator/data/pantadeusz.txt")
@@ -29,12 +30,28 @@ def view_data_set(request):
     :return: Http response with a list of specimens with chosen data types in response body. In response body it is a list of dictionaries.
     """
     response = []
-
+    id = 0
+    id_init = True
     for i in range(request.data["amount"]):  # generate as many specimen as "amount" dictates
         row = {}
         human = Person()
         for data_type in request.data["types"]:
-            row[data_type["name"]] = extract_value(data_type["type"], human, i)
+            if data_type["type"] == "id":
+                if id_init:
+                    if "start_value" in data_type:
+                        id =  int(data_type["start_value"])
+                    else:
+                        id = 0
+                    id_init = False
+                row[data_type["name"]] =  id
+                id +=1
+            elif data_type["type"] == "key":
+                if "min" in data_type and "max" in data_type:
+                    row[data_type["name"]] = random.randint(data_type["min"],data_type["max"])
+                else:
+                    row[data_type["name"]] = 1
+            else:
+                row[data_type["name"]] = extract_value(data_type["type"], human)
         response.append(row)
     return Response(response,status=200)
 
@@ -72,6 +89,8 @@ def extract_value(data_type, human=None, id=0):
             return human.place["voivodeship"]
         case "paragraph":
             return txt_gen_pt.get_random_paragraph()
+        case "key":
+            return 0
         case _:
             return None
 
