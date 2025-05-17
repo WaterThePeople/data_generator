@@ -111,9 +111,9 @@ class Person:
         :return: PESEL number as string with 11 letters
         """
         pesel_number = ""
-        # extract number 00-99 from year
+        # numbers 1-2 : extract number 00-99 from year
         pesel_number=str(date_for_pesel.year)[2:]
-        # extract month and add (+00 for 1900-1999 and +20 for 2000-2099)
+        # numbers 3-4 : extract month and add (+00 for 1900-1999 and +20 for 2000-2099)
         month_value = 0
         if date_for_pesel.year >= 2000:
             month_value+=20
@@ -121,27 +121,27 @@ class Person:
         if month_value < 10:
             pesel_number += "0"
         pesel_number += str(month_value)
-
-        # day of the month
+        # numbers 5-6 : day of the month
         if date_for_pesel.day < 10:
             pesel_number += "0"
         pesel_number += str(date_for_pesel.day)
-
-        # random part from 0000 to 9999
-        random_part=random.randint(0,9999)
-        if random_part < 10:
-            pesel_number += "000"
-        elif random_part < 100:
-            pesel_number += "00"
-        elif random_part < 1000:
-            pesel_number += "0"
-        pesel_number += str(random_part)
-
-        # (even number and 0 for female) and (odd number for male)
+        # numbers 7-9 : random part from 000 to 999
+        for i in range(3):
+            pesel_number += str(random.randint(0,9))
+        # number 10 : (even number and 0 for female) and (odd number for male)
         if gender == "male":
             numbers = [1,3,5,7,9]
         else:
             numbers = [0,2,4,6,8]
         pesel_number += str(random.choice(numbers))
-
+        # number 11 : checksum
+        checsum_multipliers = [1,3,7,9,1,3,7,9,1,3]
+        checksum = 0
+        for x, y in zip(pesel_number, checsum_multipliers):
+            checksum += (int(x) * y)
+        checksum = checksum % 10
+        if checksum != 0:
+            checksum = 10 - checksum  
+        pesel_number+=str(checksum)
+        
         return pesel_number
