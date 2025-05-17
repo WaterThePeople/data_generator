@@ -15,7 +15,9 @@ def view_defined_field_types(request):
     :param request: Not necessary in this version.
     :return: Http response with all available data types in response body. In response body it is a dictionary with list.
     """
-    available_types=["id", "name", "surname", "pesel_number", "gender", "birth_date", "locality", "municipality", "county", "voivodeship", "paragraph"]
+    # available_types=["id", "name", "surname", "pesel_number", "gender", "birth_date", "locality", "municipality", "county", "voivodeship", "paragraph"]
+    available_types=[{"id" : ["start_value"]}, {"name": []}, {"surname": []}, {"pesel_number": []}, {"gender": []}, {"birth_date": []}, {"locality": []}, {"municipality": []}, {"county": []}, {"voivodeship": []}, {"paragraph": []}, {"key": ["min","max"]}]
+
     return Response({"available_types": available_types}, status=200)
 
 
