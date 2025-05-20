@@ -19,7 +19,7 @@ function Rows({
 }: {
   array: any[];
   setArray: React.Dispatch<React.SetStateAction<any[]>>;
-  onUpdate: (id: number, newName: string, type: string) => void;
+  onUpdate: (id: number, newName: string, type: string, fields: any) => void;
   removeRow: (id: number) => void;
   types: any[];
 }) {
@@ -71,7 +71,7 @@ function SortableRow({
   types,
 }: {
   item: any;
-  onUpdate: (id: number, newName: string, type: string) => void;
+  onUpdate: (id: number, newName: string, type: string, fields: any) => void;
   index: number;
   removeRow: (id: number) => void;
   types: any[];

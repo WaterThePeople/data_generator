@@ -34,3 +34,28 @@
     &:hover
         background: $green4 !important
         border: none !important
+
+.modal
+    min-width: 420px
+    background: $b1
+    color: $w1
+    padding: $value-3
+    border-radius: $value-3
+    @include element-flex(column, flex-start, flex-start)
+    gap: $value-3
+    border: 2px solid $b2
+    text-align: center
+
+.title_modal
+    +label-24
+    color: $bw
+    width: 100%
+
+.formats
+    width: 100%
+    @include element-flex(row)
+    gap: $value-2
+    flex-wrap: wrap
+
+.format
+    width: calc(50% - $value-2/2)
